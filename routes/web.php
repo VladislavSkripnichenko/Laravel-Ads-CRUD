@@ -15,6 +15,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('/edit', function () {
+    return view('create');
+});
+
+Route::get('/edit/{id}', function () {
+    return view('edit');
+});
+
+Route::get('/{id}', function () {
+    return view('ad');
+});
+
+Route::post('logout', 'Auth\AuthController@logout')->name('logout');
+
+Route::post('/','Auth\AuthController@auth')->name('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');
