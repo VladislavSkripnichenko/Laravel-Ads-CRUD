@@ -11,6 +11,7 @@
         <ul class="list-inline">
             <li class="list-inline-item">{{ $ad->creator->username }}</li>
             <li class="list-inline-item">{{ $ad->created_at }}</li>      
+        @if(Auth::user()->id == $ad->creator->id)
         </ul>
         <p class="lead">
         <a class="btn btn-primary btn-lg" href="/edit/{{$ad->id}}" role="button">Edit</a>
@@ -22,6 +23,7 @@
                 {{csrf_field()}}
                 <button class="btn btn-danger btn-sm">Delete</button>
             </form>
+        @endif
       </div>
 </div>
 </div>

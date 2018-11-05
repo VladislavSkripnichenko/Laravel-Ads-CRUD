@@ -42,20 +42,23 @@
             <td class="table-text">
                 <div>{{ $ad->created_at }}</div>
             </td>
-           {{-- @if(Auth::user()->username == $ad->creator->username) --}}
+           @if(Auth::check() && Auth::user()->id == $ad->creator->id)
              <td>
                 <a class="btn btn-primary btn-lg" href="/edit/{{ $ad->id }}" role="button">Edit</a>
              </td>
              <td>
-                <form action="{{ route('delete', $ad->id) }}" method="post" onSubmit="return confirm('Are You Sure To Delete 
-                    This Item? #{{ $ad->title }} ')">
-                    
+                <form action="{{ route('delete', $ad->id) }}" method="post">    
                     {{method_field("DELETE")}}
                     {{csrf_field()}}
                     <button class="btn btn-danger btn-sm">Delete</button>
                 </form>
             </td>
-          {{-- @endif --}}
+            @else
+            <td>
+             </td>
+             <td>
+            </td>
+          @endif
            </tr>
          @endforeach
        </tbody>
@@ -65,6 +68,9 @@
  </div>
 </div>
 </div>
+@else
+<h1>We dont have Ads</h1>
 @endif
+
 
 @endsection

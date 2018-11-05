@@ -11,13 +11,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'username' => 'admin',
-            //'email' => 'admin@gmail.com',
-            'password' => bcrypt('admin'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
-        // $this->call(UsersTableSeeder::class);
+        for ($i = 1; $i <= 10; $i++) {
+            DB::table('users')->insert([
+                'username' => 'User_' . $i,
+                'password' => bcrypt('qwe123'),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
+        $this->call(AdsSeeder::class);
     }
 }
