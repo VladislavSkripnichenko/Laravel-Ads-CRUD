@@ -11,15 +11,13 @@
             {{ csrf_field() }}
                 <div class="modal-body mx-3">
                     <div class="md-form mb-5">
-                        <i class="glyphicon glyphicon-user prefix grey-text"></i>
-                        <input name="username" type="text" id="defaultForm-username" class="form-control validate">
                         <label data-error="wrong" data-success="right" for="defaultForm-username">Your Username</label>
+                        <input required name="username" type="text" id="defaultForm-username" class="form-control validate">
                     </div>
 
                     <div class="md-form mb-4">
-                        <i class="glyphicon glyphicon-lock prefix grey-text"></i>
-                        <input name='password' type="password" id="defaultForm-pass" class="form-control validate">
                         <label data-error="wrong" data-success="right" for="defaultForm-pass">Your Password</label>
+                        <input required name='password' type="password" id="defaultForm-pass" class="form-control validate">
                     </div>
 
                 </div>

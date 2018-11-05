@@ -11,24 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','AdsController@index');
 
-Route::get('/edit', function () {
-    return view('create');
-});
-
-Route::get('/edit/{id}', function () {
+Route::get('/edit',function(){
     return view('edit');
-});
+})->name('CreateAd');
 
-Route::get('/{id}', function () {
-    return view('ad');
-});
+Route::post('edit','AdsController@create')->name('create');
+
+Route::get('/edit/{id}','AdsController@edit');
+
+Route::post('/edit/{id}','AdsController@update');
+
+Route::delete('/delete/{id}','AdsController@delete')->name('delete');
+
+Route::get('/{id}','AdsController@show');
 
 Route::post('logout', 'Auth\AuthController@logout')->name('logout');
 
 Route::post('/','Auth\AuthController@auth')->name('auth');
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');

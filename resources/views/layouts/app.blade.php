@@ -36,7 +36,10 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        @if (Auth::guest())
+                        @else
+                    <li><a class="btn btn-success" href="{{route('CreateAd')}}">Create Ad</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -45,7 +48,7 @@
                         @if (Auth::guest())
                             {{-- <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li> --}}
-                            <li><a class="btn btn-default btn-rounded" data-toggle="modal" data-target="#modalLoginForm">Register or login modal</a></li>
+                            <li><a class="btn btn-default" data-toggle="modal" data-target="#modalLoginForm">Register or login modal</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -71,7 +74,15 @@
                 </div>
             </div>
         </nav>
-
+    @if($errors)
+        @foreach ($errors->all() as $error)
+            <p class="alert alert-danger">{{ $error }}</p>
+        @endforeach
+    @endif
+    @if(Session::has('status'))
+        <p class="alert alert-info">{{ Session::get('status') }}</p>
+    @endif
+    
         @yield('content')
     </div>
 
@@ -80,5 +91,4 @@
 </body>
 
 @include('auth.auth')
-
 </html>
