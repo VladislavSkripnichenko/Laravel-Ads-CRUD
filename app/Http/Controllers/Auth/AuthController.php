@@ -7,12 +7,11 @@ use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Validator;
+use Auth;
 
 class AuthController extends Controller
 {
     use AuthenticatesUsers;
-
-    protected $redirectTo = '/';
 
     public function username()
     {
@@ -29,24 +28,28 @@ class AuthController extends Controller
 
     public function auth(Request $request)
     {
-
         $authdata = $request->all();
 
         $rules_user = ['username' => 'required|string|max:255|unique:users'];
-        $rules_pass = ['username' => 'required|string|min:6'];
+        $rules_pass = ['password' => 'required|string|max:255'];
 
         $user_exist = $this->validation($authdata, $rules_user);
         $password_valid = $this->validation($authdata, $rules_pass);
 
         if ($user_exist->fails()) {
             $this->login($request);
-            return redirect()->back();
+            if (Auth::check()){
+                return redirect()->back();
+            }else{
+                return redirect()->back()->withErrors($user_exist->errors());
+            }
         } else {
             if ($password_valid->fails()) {
-                return redirect()->back();
+                return redirect()->back()->withErrors($password_valid->errors());
             } else {
                 if ($this->create($authdata)) {
                     $this->login($request);
+                    return redirect()->back();
                 }
             }
         }
