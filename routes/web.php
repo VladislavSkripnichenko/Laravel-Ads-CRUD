@@ -15,15 +15,15 @@ Route::get('/','AdsController@index');
 
 Route::get('/edit',function(){
     return view('edit');
-})->name('CreateAd');
+})->name('CreateAd')->middleware('auth');
 
 Route::post('edit','AdsController@create')->name('create');
 
-Route::get('/edit/{id}','AdsController@edit');
+Route::get('/edit/{id}','AdsController@edit')->middleware('auth');
 
 Route::post('/edit/{id}','AdsController@update');
 
-Route::delete('/delete/{id}','AdsController@delete')->name('delete');
+Route::delete('/delete/{id}','AdsController@delete')->name('delete')->middleware('auth');
 
 Route::get('/{id}','AdsController@show');
 
