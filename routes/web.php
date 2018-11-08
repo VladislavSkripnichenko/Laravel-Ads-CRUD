@@ -27,8 +27,12 @@ Route::delete('/delete/{id}','AdsController@delete')->name('delete')->middleware
 
 Route::get('/{id}','AdsController@show');
 
+
 Route::post('logout', 'Auth\AuthController@logout')->name('logout');
 
 Route::post('/','Auth\AuthController@auth')->name('auth');
 
-// Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('404', ['as' => '404', 'uses' => 'ErrorController@notfound']);
+Route::get('500', ['as' => '500', 'uses' => 'ErrorController@fatal']);
+

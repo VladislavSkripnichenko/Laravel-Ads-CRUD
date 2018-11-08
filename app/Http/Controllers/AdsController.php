@@ -27,17 +27,16 @@ class AdsController extends Controller
     public function create(Request $request)
     {
         if (Auth::check()) {
-            $validator = Validator::make($request->all(), [
-                'title' => 'required|max:255',
-                'description' => 'required|max:255',
-            ]);
+            $data = $request->all();
+
+            $validator = $this->validation($data);
 
             if ($validator->fails()) {
                 return redirect('/')
                     ->withInput()
                     ->withErrors($validator);
             }
-            $data = $request->all();
+
             $ad = new Ad;
             $ad->title = $data['title'];
             $ad->description = $data['description'];
@@ -51,7 +50,7 @@ class AdsController extends Controller
 
     public function show($id)
     {
-        $ad = Ad::find($id);
+        $ad = Ad::findOrFail($id);
         return view('show', [
             'ad' => $ad,
         ]);
@@ -59,7 +58,7 @@ class AdsController extends Controller
 
     public function edit($id)
     {
-        $ad = Ad::find($id);
+        $ad = Ad::findOrFail($id);
         if (Auth::user()->id == $ad->creator->id) {
             return view('edit')->with('ad', $ad);
         } else {
@@ -71,7 +70,15 @@ class AdsController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        $ad = Ad::find($id);
+        $validator = $this->validation($data);
+
+        if ($validator->fails()) {
+            return redirect('/')
+                ->withInput()
+                ->withErrors($validator);
+        }
+
+        $ad = Ad::findOrFail($id);
         if (Auth::user()->id == $ad->creator->id) {
             $ad->title = $data['title'];
             $ad->description = $data['description'];
@@ -91,6 +98,15 @@ class AdsController extends Controller
         } else {
             return redirect('/')->with('status', 'You dont have permission');
         }
+    }
+
+    private function validation($ad)
+    {
+        $rules = [ 
+            'title' => 'required|max:255',
+            'description' => 'required|max:255'
+        ];
+        return Validator::make($ad, $rules);
     }
 
 }

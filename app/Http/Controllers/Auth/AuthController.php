@@ -39,7 +39,7 @@ class AuthController extends Controller
         if ($user_exist->fails()) {
             $this->login($request);
             if (Auth::check()){
-                return redirect()->back();
+                return redirect()->back()->with('status', 'Hello, ' . Auth::user()->username . '. Glad to see you again!');
             }else{
                 return redirect()->back()->withErrors($user_exist->errors());
             }
@@ -49,7 +49,7 @@ class AuthController extends Controller
             } else {
                 if ($this->create($authdata)) {
                     $this->login($request);
-                    return redirect()->back();
+                    return redirect()->back()->with('status', 'Welcome, ' . Auth::user()->username . '. Your account created successfully!');
                 }
             }
         }
