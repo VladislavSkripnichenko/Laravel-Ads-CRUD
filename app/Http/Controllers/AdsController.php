@@ -9,13 +9,7 @@ use Validator;
 
 class AdsController extends Controller
 {
-    //
-
-    public function __construct()
-    {
-        // $this->middleware('auth');
-    }
-
+    
     public function index()
     {
         $ads = Ad::orderBy('created_at', 'asc')->paginate(5);
@@ -44,7 +38,6 @@ class AdsController extends Controller
             $ad->save();
             $request->session()->flash('status', 'Ad was successful created!');
             return redirect('/' . $ad->id);
-
         }
     }
 
@@ -64,7 +57,6 @@ class AdsController extends Controller
         } else {
             return redirect('/')->with('status', 'You dont have permission');
         }
-
     }
 
     public function update(Request $request, $id)
@@ -73,7 +65,8 @@ class AdsController extends Controller
         $validator = $this->validation($data);
 
         if ($validator->fails()) {
-            return redirect('/')
+            return redirect()
+                ->back()
                 ->withInput()
                 ->withErrors($validator);
         }
@@ -85,7 +78,7 @@ class AdsController extends Controller
             $ad->save();
             return redirect('/' . $id)->with('status', 'Ad changed');
         } else {
-            return redirect('/')->with('status', 'You dont have permission');
+           return redirect('/')->with('status', 'You dont have permission');
         }
     }
 
@@ -102,9 +95,9 @@ class AdsController extends Controller
 
     private function validation($ad)
     {
-        $rules = [ 
+        $rules = [
             'title' => 'required|max:255',
-            'description' => 'required|max:255'
+            'description' => 'required|max:255',
         ];
         return Validator::make($ad, $rules);
     }

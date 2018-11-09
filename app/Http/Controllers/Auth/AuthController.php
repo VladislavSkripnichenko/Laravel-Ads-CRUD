@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Validator;
-use Auth;
 
 class AuthController extends Controller
 {
@@ -38,9 +38,9 @@ class AuthController extends Controller
 
         if ($user_exist->fails()) {
             $this->login($request);
-            if (Auth::check()){
+            if (Auth::check()) {
                 return redirect()->back()->with('status', 'Hello, ' . Auth::user()->username . '. Glad to see you again!');
-            }else{
+            } else {
                 return redirect()->back()->withErrors($user_exist->errors());
             }
         } else {

@@ -32,7 +32,7 @@ Route::post('logout', 'Auth\AuthController@logout')->name('logout');
 
 Route::post('/','Auth\AuthController@auth')->name('auth');
 
-
 Route::get('404', ['as' => '404', 'uses' => 'ErrorController@notfound']);
 Route::get('500', ['as' => '500', 'uses' => 'ErrorController@fatal']);
+
 

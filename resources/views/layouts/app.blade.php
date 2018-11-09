@@ -41,13 +41,10 @@
                     <li><a class="btn btn-success" href="{{route('CreateAd')}}">Create Ad</a></li>
                         @endif
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            {{-- <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li> --}}
                             <li><a class="btn btn-default" data-toggle="modal" data-target="#modalLoginForm">Register or login modal</a></li>
                         @else
                             <li class="dropdown">
